@@ -1,0 +1,7 @@
+{
+  "name": "SuperCalculator",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
