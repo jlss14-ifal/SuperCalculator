@@ -1,8 +1,8 @@
 {
   "type": "module",
-  "name": "pure_ts_template",
+  "name": "super_calculator",
   "version": "1.0.0",
-  "description": "This is an experiment on the how to create Pure-TS-Template",
+  "description": "This is an experiment on the how to create SuperCalculator",
   "main": "index.js",
   "scripts": {
     "build:src": "babel src --out-dir dist/src --extensions \".ts\"",
@@ -11,14 +11,17 @@
     "build:fix-imports": "babel scripts/fix-imports.ts > ./scripts/fix-imports.js && node scripts/fix-imports.js",
     "build": "npm run build:src && npm run build:test && npm run build:rename && npm run build:fix-imports",
     "start": "node dist/src/index.mjs",
+    "start:prod": "node dist/index.mjs",
     "dev": "ts-node src/index.ts",
     "startdev": "tsc && node dist/src/index.mjs",
     "test:ts": "jest",
     "test:js": "mocha dist/test/**/*.mjs",
     "test": "npm run test:ts && npm run build && npm run test:js",
-    "test:watch": "jest --watch"
+    "test:ts:watch": "jest --watch",
+    "test:js:watch": "npm run build && mocha dist/test/**/*.mjs --watch",
+    "test:watch": "npm run test:ts:watch && npm run test:js:watch"
   },
-  "author": "Author",
+  "author": "José Lucas dos Santos da Silva",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.25.9",
@@ -35,7 +38,8 @@
   },
   "dependencies": {
     "dotenv": "^16.4.5",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "mathjs": "^14.0.0"
   },
   "babel": {
     "presets": [

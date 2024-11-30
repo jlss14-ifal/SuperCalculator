@@ -1,7 +1,7 @@
-# Pure-TS-Template
+# SuperCalculator
 
 ## Overview
-Pure-TS-Template is a robust and ready-to-use template for starting new projects with a powerful tech stack. It includes pre-installed configurations for Node.js, TypeScript, DotEnv, Express, Jest, Babel, and Mocha, providing a comprehensive setup for both JavaScript and TypeScript development and testing.
+SuperCalculator is a robust and ready-to-use template for starting new projects with a powerful tech stack. It includes pre-installed configurations for Node.js, TypeScript, DotEnv, Express, Jest, Babel, and Mocha, providing a comprehensive setup for both JavaScript and TypeScript development and testing.
 
 ## Features
 - **Node.js**: Server-side JavaScript runtime environment.
@@ -21,7 +21,7 @@ Ensure you have Node.js and npm installed on your machine.
 ### Installation
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/jlss14-ifal/Pure-TS-Template.git
+   git clone https://github.com/jlss14-ifal/SuperCalculator.git
 2. Install the dependencies:
 ```bash
 npm install
@@ -53,7 +53,9 @@ In the project directory, you can run the following scripts:
 - **`npm run test:ts`**: Runs all the TypeScript tests using Jest.
 - **`npm run test:js`**: Runs all the compiled JavaScript tests in the `dist/test` directory using Mocha.
 - **`npm test`**: Executes the `test:ts`, `build`, and `test:js` scripts sequentially to perform a full test cycle.
-- **`npm run test:watch`**: Runs Jest in watch mode, re-running tests when files change.
+- **`npm run test:ts:watch`**: Runs Jest in watch mode, automatically re-running TypeScript tests when files change.
+- **`npm run test:js:watch`**: Builds the project and then runs Mocha in watch mode to re-run JavaScript tests when files change.
+- **`npm run test:watch`**: Runs both Jest and Mocha in watch mode, allowing you to monitor and automatically re-run both TypeScript and JavaScript tests when files change.
 
 These scripts provide a streamlined workflow for building, starting, and testing your project.
 
