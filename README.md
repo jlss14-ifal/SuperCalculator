@@ -1,8 +1,5 @@
 # SuperCalculator
 
-Sure! Here is a note you can include in your `README.md` to explain why a specific version of Node.js is being used:
-
-```markdown
 ## Node.js Version
 
 This project requires Node.js version `20.18.1`. The version is specified to ensure compatibility with certain packages, specifically [`rethinkdb-ts`](https://github.com/rethinkdb/rethinkdb-ts), which requires a Node.js version between `16.x` and `20.x`. Using a different version of Node.js may result in compatibility issues and unexpected behavior.
