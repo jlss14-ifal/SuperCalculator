@@ -1,5 +1,24 @@
 # SuperCalculator
 
+Sure! Here is a note you can include in your `README.md` to explain why a specific version of Node.js is being used:
+
+```markdown
+## Node.js Version
+
+This project requires Node.js version `20.18.1`. The version is specified to ensure compatibility with certain packages, specifically [`rethinkdb-ts`](https://github.com/rethinkdb/rethinkdb-ts), which requires a Node.js version between `16.x` and `20.x`. Using a different version of Node.js may result in compatibility issues and unexpected behavior.
+
+To manage Node.js versions, we recommend using `nvm` (Node Version Manager). You can switch to the required version by running the following commands:
+
+```sh
+nvm install 20.18.1
+nvm use 20.18.1
+```
+
+Additionally, a `.nvmrc` file is provided in the project root directory, which specifies the required Node.js version. This allows `nvm` to automatically switch to the correct version when you navigate to the project directory.
+
+For more information on installing and using `nvm`, please refer to the [official nvm documentation](https://github.com/nvm-sh/nvm).
+
+
 ## Overview
 SuperCalculator is a robust and ready-to-use template for starting new projects with a powerful tech stack. It includes pre-installed configurations for Node.js, TypeScript, DotEnv, Express, Jest, Babel, and Mocha, providing a comprehensive setup for both JavaScript and TypeScript development and testing.
 
@@ -11,6 +30,9 @@ SuperCalculator is a robust and ready-to-use template for starting new projects 
 - **Jest**: Testing framework for TypeScript code.
 - **Babel**: Compiler for JavaScript code, specifically for testing.
 - **Mocha**: Testing framework, used in combination with Babel for JavaScript tests.
+
+### News Features
+- **Rethinkdb**: Is a[DB](https://registry.hub.docker.com/_/rethinkdb/);
 
 ## Getting Started
 Follow these instructions to get your development environment set up.
@@ -45,9 +67,9 @@ In the project directory, you can run the following scripts:
 - **`npm run build`**: Runs the `build:src`, `build:test`, `build:rename`, and `build:fix-imports` scripts sequentially to perform a full build.
 
 ### Start Scripts
-- **`npm start`**: Executes the application from the `dist/src/index.mjs` file.
-- **`npm run dev`**: Starts the development server using `ts-node` with the `src/index.ts` file.
-- **`npm run startdev`**: Compiles the TypeScript files and starts the application from the `dist/src/index.mjs` file.
+- **`npm start`**: Executes the application from the `dist/src/server.mjs` file.
+- **`npm run dev`**: Starts the development server using `ts-node` with the `src/server.ts` file.
+- **`npm run startdev`**: Compiles the TypeScript files and starts the application from the `dist/src/server.mjs` file.
 
 ### Test Scripts
 - **`npm run test:ts`**: Runs all the TypeScript tests using Jest.
@@ -59,6 +81,22 @@ In the project directory, you can run the following scripts:
 
 These scripts provide a streamlined workflow for building, starting, and testing your project.
 
+## Running RethinkDB in a Docker Container
+
+To start a RethinkDB container that removes itself upon stopping, use the following command:
+
+```sh
+docker run --rm -d --name rethinkdb1 -p 28015:28015 -p 8080:8080 rethinkdb:2.4.4-bookworm-slim
+```
+
+- `--rm`: Automatically remove the container when it is stopped.
+- `-d`: Run the container in detached mode (in the background).
+- `--name rethinkdb1`: Assign the name "rethinkdb1" to the container.
+- `-p 28015:28015`: Map port 28015 of the container to port 28015 on your host machine (driver port).
+- `-p 8080:8080`: Map port 8080 of the container to port 8080 on your host machine (web interface port).
+- `rethinkdb:2.4.4-bookworm-slim`: Use the RethinkDB image with the tag `2.4.4-bookworm-slim`.
+
+This command will start RethinkDB in a Docker container, making it accessible via the specified ports, and will ensure the container is automatically removed when stopped.
 
 ## Commands Used
 
@@ -76,19 +114,19 @@ These scripts provide a streamlined workflow for building, starting, and testing
    - Update `scripts` in `package.json`.
 
 3. **Create Entry File**:
-   - Create the file `src/index.ts` and add a simple server with "Hello World".
+   - Create the file `src/server.ts` and add a simple server with "Hello World".
 
 4. **Transpile TypeScript to JavaScript**:
    ```bash
-   tsc index.ts
+   tsc server.ts
    ```
-   - Transpile the TypeScript file to `index.js`.
+   - Transpile the TypeScript file to `server.js`.
 
 5. **Run the Server**:
    ```bash
    npm test
    ```
-   - Run `index.js`.
+   - Run `server.js`.
 
 6. **Initialize Git Repository**:
    ```bash
@@ -159,6 +197,16 @@ These scripts provide a streamlined workflow for building, starting, and testing
 18. **Commit Changes**:
     ```bash
     git commit -m "chore: add DotEnv, Express, Jest, Babel, Mocha and TypeScript dependencies"
+    ```
+
+19. **Install rethinkdb-ts**:
+    ```bash
+    npm install rethinkdb-ts
+    ```
+
+20. **Install axios**:
+    ```bash
+    npm install axios
     ```
 
 ## Future:

@@ -4,6 +4,10 @@ services:
   api:
     # Build the Docker image using the Dockerfile in the current directory
     build: .
+    depends_on:
+      db:
+        # Ensures that the RethinkDB service is healthy before starting the application
+        condition: service_healthy
     # Map the port on the host to the port on the container
     ports:
     # The ${PORT} variable is read from the environment, allowing the container to listen on the specified host port
@@ -11,6 +15,31 @@ services:
     # Specify the networks the service is connected to
     networks:
       - app_network
+  db:
+    # Uses a specific version of the RethinkDB image from Docker Hub
+    image: rethinkdb:2.4.4-bookworm-slim
+    volumes:
+      # Uses a named volume "rethinkdb_data" for persistent storage
+      - rethinkdb_data:/data
+    ports:
+      # Exposes the RethinkDB driver port to the host
+      - "${DB_PORT}:${DB_PORT}"
+      # Exposes the RethinkDB web interface port to the host
+      - "${DB_PORT_WEB}:${DB_PORT_WEB}"
+    # Connects the service to the specified network
+    networks:
+      - app_network
+    healthcheck:
+      # Checks if the web interface is accessible to determine container health
+      test: ["CMD-SHELL", "curl -f http://localhost:${DB_PORT_WEB}/ || exit 1"]
+      # Time between health checks
+      interval: 1m30s
+      # Time before considering a health check failed
+      timeout: 30s
+      # Number of attempts before marking the container as unhealthy
+      retries: 5
+      # Initial wait time before starting health checks
+      start_period: 30s
 
 # Define the custom networks used by the services
 networks:
@@ -18,3 +47,7 @@ networks:
   app_network:
       # Specify the network driver as 'bridge', creating a private internal network on the host
       driver: bridge
+
+volumes:
+  # Defines a named volume "rethinkdb_data" for persistent storage
+  rethinkdb_data:

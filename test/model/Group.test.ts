@@ -1,3 +1,5 @@
+
+import assert from 'assert';
 import { Calculation } from "../../src/model/Calculation";
 import { Group } from "../../src/model/Group";
 import { exportToCSV } from "../../src/util/exportToCSV";
@@ -12,14 +14,14 @@ describe('Group and Calculation', () => {
         const mainGroup = new Group<Group<Calculation>>('3', 'Main Group');
         mainGroup.addSubgroup(subGroup);
 
-        expect(mainGroup.id).toBe('3');
-        expect(mainGroup.name).toBe('Main Group');
-        expect(mainGroup.subgroup.length).toBe(1);
-        expect(mainGroup.subgroup[0].id).toBe('2');
-        expect(mainGroup.subgroup[0].name).toBe('Subgroup 1');
-        expect((mainGroup.subgroup[0] as Group<Calculation>).subgroup[0].id).toBe('1');
-        expect((mainGroup.subgroup[0] as Group<Calculation>).subgroup[0].name).toBe('Calculation 1');
-        expect((mainGroup.subgroup[0] as Group<Calculation>).subgroup[0].value).toBe("100-10");
+        assert.strictEqual(mainGroup.id, '3');
+        assert.strictEqual(mainGroup.name, 'Main Group');
+        assert.strictEqual(mainGroup.subgroup.length, 1);
+        assert.strictEqual(mainGroup.subgroup[0].id, '2');
+        assert.strictEqual(mainGroup.subgroup[0].name, 'Subgroup 1');
+        assert.strictEqual((mainGroup.subgroup[0] as Group<Calculation>).subgroup[0].id, '1');
+        assert.strictEqual((mainGroup.subgroup[0] as Group<Calculation>).subgroup[0].name, 'Calculation 1');
+        assert.strictEqual((mainGroup.subgroup[0] as Group<Calculation>).subgroup[0].value, "100-10");
     });
 
     it('Deve exportar dados corretamente para CSV', () => {
@@ -32,7 +34,7 @@ describe('Group and Calculation', () => {
 
         const csv = exportToCSV([mainGroup]);
         const expectedCSV = 'Grupo,Subgrupo,Conta,Valor\nMain Group,Subgroup 1,Calculation 1,100-11\n';
-        expect(csv).toBe(expectedCSV);
+        assert.strictEqual(csv, expectedCSV);
     });
 
     it('Deve exportar dados corretamente para JSON', () => {
@@ -66,6 +68,6 @@ describe('Group and Calculation', () => {
                 ]
             }
         ], null, 2);
-        expect(json).toBe(expectedJSON);
+        assert.strictEqual(json, expectedJSON);
     });
 });
