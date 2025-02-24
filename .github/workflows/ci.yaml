@@ -20,6 +20,13 @@ jobs:
                 node-version: [21.6.0]
                 os: [ubuntu-latest]
         
+        services:
+            rethinkdb:
+                image: rethinkdb:latest
+                ports:
+                    - 28015:28015
+                    - 8080:8080
+
         steps:
             - name: Checkout source code
               uses: actions/checkout@v4
