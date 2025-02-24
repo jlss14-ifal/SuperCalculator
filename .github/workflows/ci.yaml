@@ -38,7 +38,7 @@ jobs:
                 cache: 'npm'
             
             - name: Install dependencies
-              run: npm install
+              run: npm install -g npm-force-resolutions
             
             - name: Running Tests
               env:
