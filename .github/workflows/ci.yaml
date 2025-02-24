@@ -76,17 +76,11 @@ jobs:
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
 
             - name: Build Docker Image
-              run: docker build -t jlss14-ifal/SuperCalculator:${{ steps.generate_tag.outputs.sha }} .
-
-            - name: Push Docker Image to DockerHub
-              run: docker push jlss14-ifal/SuperCalculator:${{ steps.generate_tag.outputs.sha }}
-
-            - name: Build Docker Image
-              run: docker build -t SuperCalculator:latest .
+              run: docker build -t jlss14/supercalculator:${{ steps.generate_tag.outputs.sha }} .
 
             - name: Push Docker Image to DockerHub
               run: docker push jlss14/supercalculator:${{ steps.generate_tag.outputs.sha }}
-    
+
     deploy:
         name: Deploy on Digital Ocean
         runs-on: ubuntu-latest
