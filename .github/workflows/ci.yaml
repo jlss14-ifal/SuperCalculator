@@ -39,8 +39,7 @@ jobs:
             
             - name: Install dependencies
               run: |
-                npm install -g npm-force-resolutions > install.log 2>&1 || (cat install.log && exit 1)
-
+                npm install > install.log 2>&1 || (cat install.log && exit 1)
             - name: Verify Jest Installation
               run: npx jest --version
             
