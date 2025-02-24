@@ -21,7 +21,7 @@ jobs:
                 os: [ubuntu-latest]
         
         services:
-            rethinkdb:
+            db:
                 image: rethinkdb:2.4.4-bookworm-slim
                 ports:
                     - 28015:28015
@@ -45,7 +45,7 @@ jobs:
             
             - name: Running Tests
               env:
-                DB_HOSTNAME: rethinkdb
+                DB_HOSTNAME: db
                 DB_PORT: 28015
                 DB_PORT_WEB: 8080
               run: npm test
