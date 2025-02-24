@@ -22,7 +22,7 @@ jobs:
         
         services:
             rethinkdb:
-                image: rethinkdb:latest
+                image: rethinkdb:2.4.4-bookworm-slim
                 ports:
                     - 28015:28015
                     - 8080:8080
