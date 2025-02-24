@@ -51,8 +51,7 @@ connectDB().then(connection => {
 
 app.get('/calculations', async (req, res) => {
     try {
-        const cursor = await r.db('test').table('calculations').run(conn);
-        const calculations = cursor//await cursor.toArray();
+        const calculations = await r.db('test').table('calculations').run(conn);
         res.json(calculations);
     } catch (error: any) {
         res.status(500).json({ error: error.message });

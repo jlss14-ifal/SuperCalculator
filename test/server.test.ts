@@ -53,6 +53,8 @@ describe('API Endpoints', () => {
     it('GET /calculations should return an empty array', async () => {
         await setup();
         const response = await axiosClient.get('/calculations');
+        console.log("Response Status:", response.status);
+        console.log("Response Data:", response.data); // Simplified logging
         if (response.status === 500)
             console.log(response.data)
         assert.strictEqual(response.status, 200);

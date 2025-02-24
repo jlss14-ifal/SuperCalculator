@@ -1,5 +1,5 @@
 # Use the Node.js 20.18.1 (VERIFY .nvmrc) base image with Alpine 3.20 for the build stage
-FROM node:20.18.1-alpine3.20 AS build
+FROM node:21.6.0-alpine3.19 AS build
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
@@ -20,7 +20,7 @@ RUN npm run build
 RUN npm install --only=production && npm cache clean --force
 
 # Use the Node.js 20.18.1 base image with Alpine 3.20 for the final stage
-FROM node:20.18.1-alpine3.20
+FROM node:21.6.0-alpine3.19
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app

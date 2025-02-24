@@ -17,7 +17,8 @@ const jestConfig: JestConfigWithTsJest = {
     },
     extensionsToTreatAsEsm: ['.ts', '.tsx'], // Diz ao Jest para tratar esses arquivos como ES Modules
     transformIgnorePatterns: ['/node_modules/', '/dist/'], // Ignorar dist e node_modules
-    
+    verbose: true,
+    silent: false
 };
 
 export default jestConfig
