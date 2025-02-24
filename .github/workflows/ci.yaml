@@ -37,6 +37,7 @@ jobs:
               env:
                 DB_HOSTNAME: rethinkdb
                 DB_PORT: 28015
+                DB_PORT_WEB: 8080
               run: npm test
 
             - name: Generate Tag
