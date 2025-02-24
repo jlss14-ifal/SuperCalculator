@@ -11,7 +11,7 @@ services:
     # Map the port on the host to the port on the container
     ports:
     # The ${PORT} variable is read from the environment, allowing the container to listen on the specified host port
-      - "${PORT}:${PORT}"
+      - "${PORT:-3000}:${PORT:-3000}"
     # Specify the networks the service is connected to
     networks:
       - app_network
@@ -23,9 +23,9 @@ services:
       - rethinkdb_data:/data
     ports:
       # Exposes the RethinkDB driver port to the host
-      - "${DB_PORT}:${DB_PORT}"
+      - "${DB_PORT:-28015}:${DB_PORT:-28015}"
       # Exposes the RethinkDB web interface port to the host
-      - "${DB_PORT_WEB}:${DB_PORT_WEB}"
+      - "${DB_PORT_WEB:-8080}:${DB_PORT_WEB:-8080}"
     # Connects the service to the specified network
     networks:
       - app_network
