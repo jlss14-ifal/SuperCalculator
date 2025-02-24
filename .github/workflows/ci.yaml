@@ -20,6 +20,13 @@ jobs:
                 node-version: [21.6.0]
                 os: [ubuntu-latest]
 
+        services:
+            db:
+                image: rethinkdb:2.4.4-bookworm-slim
+                ports:
+                    - 28015:28015
+                    - 8080:8080
+
         steps:
             - name: Checkout source code
               uses: actions/checkout@v4
@@ -43,7 +50,11 @@ jobs:
                 done
 
             - name: Running Tests
-              run: npm test
+              env:
+                  RETHINKDB_HOST: db
+                  RETHINKDB_PORT: 28015
+                  RETHINKDB_PORT_WEB: 8080
+              run: npm test > test.log 2>&1 || (cat test.log && exit 1)
 
             - name: Generate Tag
               id: generate_tag
