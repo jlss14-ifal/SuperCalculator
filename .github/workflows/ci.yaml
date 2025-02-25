@@ -106,7 +106,7 @@ jobs:
                 docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
                 docker stop $(docker ps -q) || echo "No running containers to stop"
                 docker rm $(docker ps -a -q) || echo "No containers to remove"
-                docker-compose up -d --build
+                docker compose up -d --build
               EOF
 
           - name: Copy docker-compose file via ssh
