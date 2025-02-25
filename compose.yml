@@ -31,7 +31,7 @@ services:
       - app_network
     healthcheck:
       # Checks if the web interface is accessible to determine container health
-      test: ["CMD-SHELL", "curl -f http://localhost:${DB_PORT_WEB}/ || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:${DB_PORT_WEB:-8080}/ || exit 1"]
       # Time between health checks
       interval: 1m30s
       # Time before considering a health check failed
@@ -39,7 +39,7 @@ services:
       # Number of attempts before marking the container as unhealthy
       retries: 5
       # Initial wait time before starting health checks
-      start_period: 30s
+      start_period: 30s 
 
 # Define the custom networks used by the services
 networks:
