@@ -90,25 +90,6 @@ jobs:
           - name: Checkout source code
             uses: actions/checkout@v4
 
-          - name: Test SSH Key Without Passphrase
-            run: |
-              echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key_no_passphrase.pem
-              chmod 600 private_key_no_passphrase.pem
-              ssh -o StrictHostKeyChecking=no -i private_key_no_passphrase.pem ${{ secrets.USER }}@${{ secrets.HOST }} 'echo "SSH Connection Successful"'
-            
-          - name: Debug SSH Connection
-            run: |
-              ssh -vvv -o StrictHostKeyChecking=no -i private_key_no_passphrase.pem ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
-                echo "Running deployment script on remote server"
-                whoami
-                pwd
-                ls -la
-                docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-                docker stop $(docker ps -q) || echo "No running containers to stop"
-                docker rm $(docker ps -a -q) || echo "No containers to remove"
-                docker compose up -d --build
-              EOF
-
           - name: Copy docker-compose file via ssh
             uses: appleboy/scp-action@v0.1.7
             with:
