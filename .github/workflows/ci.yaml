@@ -95,7 +95,7 @@ jobs:
             with:
               host: ${{ secrets.HOST }}
               username: ${{ secrets.USER }}
-              key: ${{ secrets.SSH_PRIVATE_KEY }}
+              #key: ${{ secrets.SSH_PRIVATE_KEY }}
               password: ${{ secrets.PASSWORD }}
               source: "./compose.yml"
               target: "~/"
@@ -105,7 +105,7 @@ jobs:
             with:
               host: ${{ secrets.HOST }}
               username: ${{ secrets.USER }}
-              key: ${{ secrets.SSH_PRIVATE_KEY }}
+              #key: ${{ secrets.SSH_PRIVATE_KEY }}
               password: ${{ secrets.PASSWORD }}
               envs: GITHUB_SHA
               script: |
