@@ -90,13 +90,22 @@ jobs:
           - name: Checkout source code
             uses: actions/checkout@v4
 
-          - name: Copy docker-compose file via ssh
+          - name: Copy docker compose file via ssh
             uses: appleboy/scp-action@v0.1.7
             with:
               host: ${{ secrets.HOST }}
               username: ${{ secrets.USER }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               source: "./compose.yml"
+              target: "~/"
+
+          - name: Copy Dockerfile via ssh
+            uses: appleboy/scp-action@v0.1.7
+            with:
+              host: ${{ secrets.HOST }}
+              username: ${{ secrets.USER }}
+              key: ${{ secrets.SSH_PRIVATE_KEY }}
+              source: "./Dockerfile"
               target: "~/"
 
           - name: Deploy to Digital Ocean droplet via SSH action
