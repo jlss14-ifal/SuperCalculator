@@ -90,26 +90,18 @@ jobs:
           - name: Checkout source code
             uses: actions/checkout@v4
 
-          - name: Setup SSH Agent and Add Key with sshpass
+          - name: Test SSH Key Without Passphrase
             run: |
-              echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
-              chmod 600 private_key.pem
-              eval $(ssh-agent -s)
-              echo ${{ secrets.SSH_PASSPHRASE }} | sshpass ssh-add private_key.pem
-
-          - name: Test SSH Key
-            run: |
-              echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
-              chmod 600 private_key.pem
-              ssh -vvv -o StrictHostKeyChecking=no -i private_key.pem ${{ secrets.USER }}@${{ secrets.HOST }} 'echo "SSH Connection Successful"'
-
+              echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key_no_passphrase.pem
+              chmod 600 private_key_no_passphrase.pem
+              ssh -o StrictHostKeyChecking=no -i private_key_no_passphrase.pem ${{ secrets.USER }}@${{ secrets.HOST }} 'echo "SSH Connection Successful"'
+            
           - name: Copy docker-compose file via ssh
             uses: appleboy/scp-action@v0.1.7
             with:
               host: ${{ secrets.HOST }}
               username: ${{ secrets.USER }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
-              passphrase: ${{ secrets.SSH_PASSPHRASE }}
               source: "./compose.yml"
               target: "~/"
 
@@ -119,7 +111,6 @@ jobs:
               host: ${{ secrets.HOST }}
               username: ${{ secrets.USER }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
-              passphrase: ${{ secrets.SSH_PASSPHRASE }}
               envs: GITHUB_SHA
               script: |
                 # Extract the tag on job build
