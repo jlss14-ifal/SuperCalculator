@@ -3,7 +3,7 @@ services:
   # Name of the service (commonly the main application service)
   api:
     # Build the Docker image using the Dockerfile in the current directory
-    build: jlss14/supercalculator:${DOCKER_IMAGE_TAG}
+    image: jlss14/supercalculator:${DOCKER_IMAGE_TAG}
     depends_on:
       db:
         # Ensures that the RethinkDB service is healthy before starting the application
