@@ -146,4 +146,4 @@ jobs:
                   echo "Running docker-compose up -d --build"
                   docker compose up -d --build
                 EOF
-          continue-on-error: true
+              continue-on-error: true
