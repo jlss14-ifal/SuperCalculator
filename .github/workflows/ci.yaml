@@ -97,6 +97,7 @@ jobs:
               username: ${{ secrets.USER }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               passphrase: ${{ secrets.SSH_PASSPHRASE }}
+              #password: ${{ secrets.PASSWORD }}
               source: "./compose.yml"
               target: "~/"
 
@@ -107,6 +108,7 @@ jobs:
               username: ${{ secrets.USER }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               passphrase: ${{ secrets.SSH_PASSPHRASE }}
+              #password: ${{ secrets.PASSWORD }}
               envs: GITHUB_SHA
               script: |
                 # Extract the ltag on job build
