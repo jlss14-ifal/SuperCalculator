@@ -96,6 +96,19 @@ jobs:
               chmod 600 private_key_no_passphrase.pem
               ssh -o StrictHostKeyChecking=no -i private_key_no_passphrase.pem ${{ secrets.USER }}@${{ secrets.HOST }} 'echo "SSH Connection Successful"'
             
+          - name: Debug SSH Connection
+            run: |
+              ssh -vvv -o StrictHostKeyChecking=no -i private_key_no_passphrase.pem ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
+                echo "Running deployment script on remote server"
+                whoami
+                pwd
+                ls -la
+                docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+                docker stop $(docker ps -q) || echo "No running containers to stop"
+                docker rm $(docker ps -a -q) || echo "No containers to remove"
+                docker-compose up -d --build
+              EOF
+
           - name: Copy docker-compose file via ssh
             uses: appleboy/scp-action@v0.1.7
             with:
@@ -111,6 +124,7 @@ jobs:
               host: ${{ secrets.HOST }}
               username: ${{ secrets.USER }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
+              envs: GITHUB_SHA
               script: |
                 # Extract the tag on job build
                 TAG=${{ needs.build.outputs.docker_tag }}
