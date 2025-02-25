@@ -111,7 +111,6 @@ jobs:
               host: ${{ secrets.HOST }}
               username: ${{ secrets.USER }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
-              envs: GITHUB_SHA
               script: |
                 # Extract the tag on job build
                 TAG=${{ needs.build.outputs.docker_tag }}
