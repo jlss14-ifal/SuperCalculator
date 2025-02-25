@@ -118,11 +118,11 @@ jobs:
                 # Login Docker
                 docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
                 # Remove Old Containers
-                CONTAINERS=${docker ps -a -q}
+                CONTAINERS=$(docker ps -a -q)
                 if [ -n "$CONTAINERS" ]; then
                   docker rm $CONTAINERS
                 else
                   echo " No containers to remove"
                 fi
                 # Run a new container from a new image
-                docker-compose up -d
+                docker-compose up -d --build
