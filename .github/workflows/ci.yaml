@@ -90,12 +90,12 @@ jobs:
           - name: Checkout source code
             uses: actions/checkout@v4
 
-          - name: Setup SSH Agent and Add Key
+          - name: Setup SSH Key
             run: |
               echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
               chmod 600 private_key.pem
               eval $(ssh-agent -s)
-              ssh-add private_key.pem <<< ${{ secrets.SSH_PASSPHRASE }}
+              sshpass -p "${{ secrets.SSH_PASSPHRASE }}" ssh-add private_key.pem
 
           - name: Test SSH Key
             run: |
