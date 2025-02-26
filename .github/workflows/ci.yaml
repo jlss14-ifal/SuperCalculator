@@ -98,3 +98,11 @@ jobs:
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               source: "./compose.yml"
               target: "~/"
+
+          - name: Deploy to Digital Ocean droplet via SSH action
+            uses: appleboy/ssh-action@v0.1.3
+            with:
+              host: ${{ secrets.HOST }}
+              username: ${{ secrets.USER }}
+              key: ${{ secrets.SSH_PRIVATE_KEY }}
+              envs: GITHUB_SHA
