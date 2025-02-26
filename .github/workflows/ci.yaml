@@ -100,9 +100,48 @@ jobs:
               target: "~/"
 
           - name: Deploy to Digital Ocean droplet via SSH action
-            uses: appleboy/ssh-action@v0.1.3
+            uses: appleboy/ssh-action@v1.2.1
             with:
               host: ${{ secrets.HOST }}
               username: ${{ secrets.USER }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               envs: GITHUB_SHA
+              script: |
+                set -x
+                # Extract the tag on job build
+                echo "Extracting the tag from the build job"
+                TAG=${{ needs.build.outputs.docker_tag }}
+
+                # Create env file
+                echo "Creating .env file"
+                [ -e .env ] && rm .env
+                touch .env
+                echo  "DOCKER_IMAGE_TAG=$TAG" > .env
+
+                # Login Docker
+                echo "Logging into Docker"
+                docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+                
+                # Stop Containers
+                echo "Stopping old containers"
+                CONTAINERS=$(docker ps -q)
+                if [ -n "$CONTAINERS" ]; then
+                  docker stop $CONTAINERS
+                else
+                  echo " No running containers"
+                fi
+
+                # Remove Old Containers
+                echo "Removing old containers"
+                CONTAINERS=$(docker ps -a -q)
+                if [ -n "$CONTAINERS" ]; then
+                  docker rm $CONTAINERS
+                else
+                  echo " No containers to remove"
+                fi
+
+                # Run a new container from a new image
+                echo "Running docker-compose up -d --build"
+                docker compose up -d --build
+
+                set +x
